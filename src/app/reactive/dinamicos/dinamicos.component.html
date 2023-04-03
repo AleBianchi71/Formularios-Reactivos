@@ -1,58 +1,87 @@
 <h2>Reactivos:</h2>
 <small>Dinamicos</small>
 <hr />
-
-<form autocomplete="off">
-  <!--Nombre-->
-  <div class="mb-3 row">
-    <label class="col-sm-3 col-form-label">Nombre</label>
-    <div class="col-sm-9">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Nombre de la persona"
-      />
-      <span class="form-text text-danger">
-        Este Campo es obligatorio
-      </span>
-    </div>
-  </div>
-
-  <!--Agregar favorito-->
-  <div class="mb-3 row">
-    <label class="col-sm-3 col-form-label">Agregar</label>
-    <div class="col-sm-9">
-      <div class="input-group">
-        <input class="form-control" placeholder="Agregar favorito" />
-
-        <button class="btn btn-outline-warning" type="button">
-          Agregar
-        </button>
+<div class="row">
+  <div class="col">
+    <form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="miFormulario">
+      <!--Nombre-->
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Nombre</label>
+        <div class="col-sm-9">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="nombre"
+            placeholder="Nombre del producto"
+          />
+          <span class="form-text text-danger" *ngIf="campoEsValido('nombre')">
+            Este campo debe ser obligatorio
+          </span>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <!--Lista de Juegos Favoritos-->
-  <!-- Agregar favorito -->
-  <div class="mb-3 row">
-    <label class="col-sm-3 col-form-label">Favoritos</label>
-    <div class="col-sm-9">
-      <div class="input-group">
-        
+      <!--Agregar favorito-->
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Agregar</label>
+        <div class="col-sm-9">
+          <div class="input-group">
+            <input class="form-control" 
+                   [formControl]="nuevoFavorito"
+                   placeholder="Agregar favorito" 
+                   (keyup.enter)="agregarFavorito()"/>
+
+            <button class="btn btn-outline-warning" 
+                    type="button"
+                    (click)="agregarFavorito()">
+              Agregar
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+
+      <!--Lista de Juegos Favoritos-->
+      <!-- Agregar favorito -->
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Favoritos</label>
+        <div class="col-sm-9" formArrayName="favoritos">
+          <div class="input-group mb-1"
+              *ngFor="let favorito of favoritosArr.controls; let i = index">
+            <input class="form-control" 
+                  [formControlName]='i'>
+
+            <button class="btn btn-outline-danger" 
+                    type="button">
+              Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+      <!--Ver para arreglar ngModel-->
+      <div class="row">
+        <div class="col-sm-12">
+          <button type="submit" class="btn btn-warning add_to_cart float-end">
+            Guardar
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
-  <!--Ver para arreglar ngModel-->
-  <div class="row">
-    <div class="col-sm-12">
-      <button
-        type="submit"
-        name="add_to_cart"
-        id="Validar"
-        class="btn btn-warning add_to_cart float-end"
-      >
-        Guardar
-      </button>
-    </div>
-  </div>
-</form>
+</div>
+
+
+<span>valied</span>
+  <pre>{{miFormulario.valid}}</pre>
+<br>
+
+<span>value</span>
+  <pre>{{miFormulario.value | json}}</pre>
+<br>
+
+<span>agregar Juego</span>
+  <pre>{{nuevoFavorito.valid}}</pre>
+  <pre>{{nuevoFavorito.value}}</pre>
+<br>
+
+
+
+
