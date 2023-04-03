@@ -53,4 +53,8 @@ nuevoFavorito: FormControl = this.fb.control('',Validators.required);
     console.log(this.miFormulario.value);
     this.miFormulario.reset(); //resetea el formulario una vez que se guardo
   }
+
+  borrar(i: number){
+    this.favoritosArr.removeAt(i); //borra los favoritos
+  }
 }
